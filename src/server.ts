@@ -41,13 +41,14 @@ app.post(
   }
 );
 
-app.get("/loadPng/:fileName", (req: Request, res: Response): void => {
+app.get("/load/png/:fileName", (req: Request, res: Response): void => {
   (async () => {
     try {
       const pngFileName = req.params.fileName;
       const filePath = path.join(FILE_PATH, pngFileName);
 
       if (!fs.existsSync(filePath)) {
+        console.error("File not found");
         return res.status(404).send("File not found");
       }
 
