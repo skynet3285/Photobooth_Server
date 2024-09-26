@@ -1,6 +1,7 @@
 import "../env";
-import { API_URL, API_PORT, FILE_PATH } from "../envType";
+import { API_IP, API_PORT, FILE_PATH } from "../envType";
 import express, { Request, Response } from "express";
+import cors from "cors";
 import multer from "multer";
 import fs from "fs";
 import path from "path";
@@ -8,9 +9,10 @@ import path from "path";
 const upload = multer({ storage: multer.memoryStorage() });
 
 const app = express();
+app.use(cors());
 
 app.post(
-  "/img/upload/:fileName",
+  "/upload/:fileName",
   upload.single("image"),
   (req: Request, res: Response): void => {
     (async () => {
@@ -18,6 +20,7 @@ app.post(
         const fileName = req.params.fileName;
         const fileData = req.file;
 
+        console.log("File Name : " + fileName);
         if (!fileData) {
           console.error("No file uploaded.");
           return res.status(400).send("No file uploaded.");
@@ -47,6 +50,7 @@ app.get("/load/png/:fileName", (req: Request, res: Response): void => {
       const pngFileName = req.params.fileName;
       const filePath = path.join(FILE_PATH, pngFileName);
 
+      console.log("File Name : " + pngFileName);
       if (!fs.existsSync(filePath)) {
         console.error("File not found");
         return res.status(404).send("File not found");
@@ -69,8 +73,8 @@ app.get("/test/:param1", (req, res) => {
   res.send(`Received: ${param1}`);
 });
 
-app.listen(API_PORT, () => {
-  console.log(API_URL);
-  console.log("File Server running on port " + API_PORT);
+app.listen(API_PORT, API_IP, () => {
+  console.log("File Server IP: " + API_IP);
+  console.log("File Server running on port: " + API_PORT);
   console.log("File Path : " + FILE_PATH);
 });
