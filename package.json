@@ -1,0 +1,14 @@
+{
+  "name": "photobooth-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "ts-node src/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}
