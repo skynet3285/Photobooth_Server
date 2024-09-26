@@ -1,3 +1,1 @@
-import { log } from "console";
-
-log("Hello, world!");
+import "./server";
